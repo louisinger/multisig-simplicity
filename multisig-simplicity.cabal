@@ -11,31 +11,14 @@ name:                multisig-simplicity
 --                   | | +----- non-breaking API additions
 --                   | | | +--- code changes with no API change
 version:             0.1.0.0
-
--- A short (one-line) description of the package.
-synopsis:            Implement a Simplicity programs that check if the sigHash of a trans
-
--- A longer description of the package.
--- description:
-
--- URL for the project homepage or repository.
+synopsis:            Implement a Simplicity for MuSig.
 homepage:            https://github.com/louisinger/multisig-simplicity
-
--- The license under which the package is released.
 license:             BSD3
-
 -- The file containing the license text.
 license-file:        LICENSE
-
 -- The package author(s).
 author:              Louis Singer
-
--- An email address to which users can send suggestions, bug reports, and
--- patches.
 maintainer:          louis.singer.git@gmail.com
-
--- A copyright notice.
--- copyright:
 
 category:            Blockchain
 
@@ -49,22 +32,17 @@ extra-source-files:  ChangeLog.md
 cabal-version:       >=1.10
 
 
-executable multisig-simplicity
-  -- .hs or .lhs file containing the Main module.
-  main-is:             Main.hs
-
-  -- Modules included in this executable, other than Main.
-  -- other-modules:
-
+library MuSigSimplicity
   -- LANGUAGE extensions used by modules in this package.
   -- other-extensions:
-
+  exposed-modules:     MuSig
   -- Other library packages from which modules are imported.
-  build-depends:       base >=4.11 && <4.12
-
-  -- Directories containing source files.
-  -- hs-source-dirs:
-
-  -- Base language which the package is written in.
+  build-depends:       base >=4.9 && <4.14
+                    ,  unification-fd 
+                    ,  lens-family >=2.0 && <2.1
+                    ,  Simplicity
+                    ,  bytestring
+                    ,  random
+  hs-source-dirs:      src
   default-language:    Haskell2010
 
