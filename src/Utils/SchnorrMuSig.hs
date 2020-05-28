@@ -1,7 +1,15 @@
 module Utils.SchnorrMuSig (
   sig,
-  addSig
+  addSig,
+  addPubKey
 ) where
+
+import Simplicity.LibSecp256k1.Schnorr
+import Simplicity.Word (Word256)
+import Simplicity.LibSecp256k1.Spec (pkPoint, sigUnpack, GEJ(..))
+
+import Utils.Scalar (scalarModulus, addScalar, scalarToWord256)
+import Utils.Secp256k1 (pointX)
 
 -- add two pubkeys values to create a new one
 addPubKey :: XOnlyPubKey -> XOnlyPubKey -> Maybe XOnlyPubKey
@@ -14,7 +22,7 @@ addPubKey pk pk' = do
 sig :: Word256 -> Integer -> Integer -> Integer -> Integer -> Sig
 sig r k order priv msg = Sig r (fromInteger val)
   where
-    val = (k + priv * msg) `mod` order
+    val = (k + priv * msg) `mod` toInteger scalarModulus
 
 -- add two sig with same r
 addSig :: Sig -> Sig -> Maybe Sig

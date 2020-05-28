@@ -7,7 +7,7 @@ module Utils.Scalar (
 ) where
 
 import Simplicity.Word (Word256)
-import Simplicity.LibSecp256k1.Spec (Scalar(..))
+import Simplicity.LibSecp256k1.Spec (Scalar(..), GEJ(..), ecMult, scalarZero)
 
 -- Constant = the scalar modulus (< 2^256)
 scalarModulus :: Word256

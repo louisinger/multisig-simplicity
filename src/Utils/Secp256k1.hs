@@ -6,7 +6,11 @@ module Utils.Secp256k1 (
 ) where
 
 import Simplicity.Word (Word256)
-import Simplicity.LibSecp256k1.Spec (_z)
+import Simplicity.LibSecp256k1.Spec (_z, feIsZero, fePack, normalize, sqr, inv, unrepr, feOne, GEJ(..), (.*.))
+import Lens.Family2 ((^.))
+import Data.ByteString (ByteString, foldl')
+import Data.Bits (shiftL, (.|.))
+import Data.ByteString.Short (fromShort)
 
 -- Checks if a Jacobian encoded point is the infinite one.
 isInf :: GEJ -> Bool
