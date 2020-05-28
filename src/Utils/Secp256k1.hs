@@ -2,11 +2,12 @@ module Utils.Secp256k1 (
   isInf,
   curveOrder,
   g,
-  pointX
+  pointX,
+  fePackToWord256
 ) where
 
 import Simplicity.Word (Word256)
-import Simplicity.LibSecp256k1.Spec (_z, feIsZero, fePack, normalize, sqr, inv, unrepr, feOne, GEJ(..), (.*.))
+import Simplicity.LibSecp256k1.Spec (_z, feIsZero, fePack, normalize, sqr, inv, unrepr, feOne, FE(..), GEJ(..), (.*.))
 import Lens.Family2 ((^.))
 import Data.ByteString (ByteString, foldl')
 import Data.Bits (shiftL, (.|.))
@@ -26,9 +27,13 @@ fromBytes = foldl' f 0
   where
     f a b = a `shiftL` 8 .|. fromIntegral b
 
+-- Use fePack and convert the result to Word256.
+fePackToWord256 :: FE -> Word256
+fePackToWord256 = fromInteger . fromBytes . fromShort . fePack . normalize
+
 -- Extract the X component of Jacobian encoded point.
 pointX :: GEJ -> Word256
-pointX p = fromInteger . fromBytes . fromShort . fePack . normalize $ xcoord
+pointX p = fePackToWord256 xcoord
   where
     xcoord = (p ^. _z) .*. sqr (inv (p ^. _z))
 

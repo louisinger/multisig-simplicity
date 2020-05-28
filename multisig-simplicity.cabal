@@ -36,7 +36,14 @@ library MuSigSimplicity
   -- LANGUAGE extensions used by modules in this package.
   -- other-extensions:
   exposed-modules:     MuSig
-  -- Other library packages from which modules are imported.
+                    ,  Utils.KeyGen
+                    ,  Utils.Scalar
+                    ,  Utils.SchnorrMuSig
+                    ,  Utils.Secp256k1
+                    ,  Test.DoubleSig
+
+  other-modules:       Utils.Ty
+
   build-depends:       base >=4.9 && <4.14
                     ,  unification-fd 
                     ,  lens-family >=2.0 && <2.1
